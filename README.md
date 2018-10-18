@@ -1,4 +1,4 @@
 # spiapcc
 
-library(devtools) \n
+library(devtools)
 devtools::install_github('eshinesimida/spiapcc')
