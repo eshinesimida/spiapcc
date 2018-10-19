@@ -1,0 +1,160 @@
+
+---
+title: "SPIA-PCC: Signaling pathway impact analysis incorporated the change of Pearson correlation coefficient between two groups"
+author: "Xianbin Li"
+date: '`r Sys.Date()`'
+output:
+  pdf_document: default
+  html_document: default
+  word_document: default
+vignette: |
+  %\VignetteIndexEntry{narray Usage Examples} %\VignetteEngine{knitr::rmarkdown} %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, echo=FALSE, results='hide', warning=FALSE, error=FALSE, message=FALSE, cache=FALSE}
+library(knitr)
+opts_chunk$set(
+  cache = FALSE,
+  echo = TRUE,
+  warning = FALSE,
+  error = FALSE,
+  message = FALSE
+)
+```
+
+spiapcc pathway signatures
+==========================
+
+This R package provides  function that uses the previous SPIA method and integrate the change of genes Pearson coefficient(PCC) from two groups. We proposed a set of three pathway analysis methods based on the change of PCC. We applied these approaches to colorectal cancer, lung cancer and Alzheimer's disease datasets and so on.
+
+Scoring the `KEGGandMetacoreDzPathwaysGEO` package data for pathway analysis
+----------------------------------------------------
+
+This is to outline how to prepare expression data, in this case from the
+`KEGGandMetacoreDzPathwaysGEO` package for pathway  analysis using spiap.
+
+### Preparing the gene expression matrix
+
+```{r}
+library(EnrichmentBrowser)
+library(KEGGandMetacoreDzPathwaysGEO)
+library(KEGGdzPathwaysGEO)
+library(SPIA)
+
+# load the dateset
+data("GSE1145")
+# get the gene expression matrix
+exprs_all <- exprs(GSE1145)
+# get the gene symbol of gene expression matrix
+all.eset <- probe.2.gene.eset(GSE1145)
+head(featureNames(all.eset))
+
+
+# Normalization of gene expression profile
+before.norm <- exprs(all.eset)
+all.eset <- normalize(all.eset, norm.method="quantile")
+after.norm <- exprs(all.eset)
+
+# Change matrix to dataframe style
+exprs_all1 <- data.frame(after.norm)
+
+# plot of normalization
+par(mfrow=c(1,2))
+boxplot(before.norm)
+boxplot(after.norm)
+```
+
+### Obtaining case and control samples
+
+```{r}
+table(pData(all.eset)$Group)
+pData(all.eset)$GROUP <- ifelse(pData(all.eset)$Group == "d", 1, 0)
+normal <- length(which(pData(all.eset)$GROUP == '0'))
+tumor <- length(which(pData(all.eset)$GROUP == '1'))
+
+```
+
+### Get differential expression genes
+
+```{r}
+# get differential expression genes
+all.eset <- de.ana(all.eset)
+head(fData(all.eset), n=4)
+all_de <- fData(all.eset)
+
+#The plot of differential expression genes 
+par(mfrow=c(1,2))
+pdistr(fData(all.eset)$ADJ.PVAL)
+volcano(fData(all.eset)$FC, fData(all.eset)$ADJ.PVAL)
+
+```
+
+### Get database of signaling pathways from KEGG
+
+```{r}
+# get pathway dataset
+kegg.gs <- get.kegg.genesets("hsa")
+
+```
+
+### Get the results of SPIA method and spiap method, we use colorectal  cancer dataset from GSE8671 
+
+```{r}
+library(spiapcc)
+
+# get differential expression genes on threshold 0.1
+tg <- all_de[all_de$ADJ.PVAL < 0.1,]
+# get fold change pf differential expression genes
+DE_colorectal = tg$FC
+names(DE_colorectal)<-as.vector(rownames(tg))
+# get all gene names
+ALL_colorectal = rownames(all_de)
+#The result of spia method
+res_spia = spia(de = DE_colorectal, all=ALL_colorectal, organism="hsa",nB=2000,plots=FALSE,beta=NULL,combine="fisher",verbose=TRUE)
+res_spia <- res_spia[,-12]
+head(res_spia)
+gse_madat2 <- exprs_all1
+
+# The results of spia_nt method
+res_nt = spiapcc(de=DE_colorectal, all=ALL_colorectal,normal = normal,tumor = tumor,  gse_madat2 = gse_madat2,organism="hsa",nB=2000,plots=FALSE,
+                   beta=NULL,combine="fisher",verbose=T, flag = 1)
+res_nt <- res_nt[,-12]
+head(res_nt)
+
+#The results of spia_tn method
+res_tn = spiapcc( de=DE_colorectal, all=ALL_colorectal,normal = normal,tumor = tumor,  gse_madat2 = gse_madat2,organism="hsa",nB=2000,plots=FALSE,
+                   beta=NULL,combine="fisher",verbose=T, flag = -1)
+res_tn <- res_tn[,-12]
+head(res_tn)
+
+#The results of spia_abs method
+res_abs = spiapcc( de=DE_colorectal, all=ALL_colorectal,normal = normal,tumor = tumor,  gse_madat2 = gse_madat2,organism="hsa",nB=2000,plots=FALSE,
+                   beta=NULL,combine="fisher",verbose=T, flag = 0)
+res_abs <- res_abs[,-12]
+head(res_abs)
+
+```
+
+```{r}
+# 
+data("GSE3467")
+result <- process(GSE3467)
+exprs_nrom <- result$exprs
+normal <- result$normal
+tumor <- result$tumor
+DE <- result$DE
+ALL <- result$ALL
+
+res = spiapcc( de=DE, all=ALL,normal = normal,tumor = tumor,  gse_madat2 = exprs_nrom, organism="hsa",nB=2000,plots=FALSE,
+                   beta=NULL,combine="fisher",verbose=T, flag = 0)
+res <- res[,-12]
+head(res)
+
+
+```
+R version information
+---------------------
+
+```{r echo=FALSE}
+sessionInfo()
+```
