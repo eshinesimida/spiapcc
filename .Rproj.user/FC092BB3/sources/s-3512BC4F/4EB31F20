@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1541468382572.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "4EB31F20",
+    "lastKnownWriteTime" : 1541468313,
+    "last_content_update" : 1541468313,
+    "path" : "~/GitHub/spiapcc/vignettes/spiapcc.Rmd",
+    "project_path" : "vignettes/spiapcc.Rmd",
+    "properties" : {
+        "cursorPosition" : "41,13",
+        "scrollLine" : "4"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1541468414369.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2886523168",
+    "id" : "F9F0FC4C",
+    "lastKnownWriteTime" : 1541468313,
+    "last_content_update" : 1541468313,
+    "path" : "~/GitHub/spiapcc/R/spiapcc.r",
+    "project_path" : "R/spiapcc.r",
+    "properties" : {
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

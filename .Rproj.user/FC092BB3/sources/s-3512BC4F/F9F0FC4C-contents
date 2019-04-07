@@ -138,7 +138,7 @@ spiapcc <- function (de = NULL, all = NULL,gse_madat2 = gse_madat2, normal = NUL
     }
     # difference form normal to tumor
     else if(flag == 1){
-      diff_exp <- (gene_exp1_mat - gene_exp2_mat)
+      diff_exp <- -(gene_exp1_mat - gene_exp2_mat)
     }
     # absolute value of difference between tow groups
     else if(flag == 0){

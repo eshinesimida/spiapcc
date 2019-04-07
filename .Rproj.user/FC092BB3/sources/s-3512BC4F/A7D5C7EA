@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1541468445317.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "A7D5C7EA",
+    "lastKnownWriteTime" : 1541468448,
+    "last_content_update" : 1541468448421,
+    "path" : "~/GitHub/spiapcc/man/spiapcc.Rd",
+    "project_path" : "man/spiapcc.Rd",
+    "properties" : {
+        "cursorPosition" : "40,26",
+        "scrollLine" : "36"
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_doc"
+}

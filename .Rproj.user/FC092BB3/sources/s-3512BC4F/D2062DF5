@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1541468424467.000,
+    "dirty" : true,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "D2062DF5",
+    "lastKnownWriteTime" : 1541468313,
+    "last_content_update" : 1541471203227,
+    "path" : "~/GitHub/spiapcc/R/process.r",
+    "project_path" : "R/process.r",
+    "properties" : {
+        "cursorPosition" : "19,29",
+        "scrollLine" : "11"
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
